@@ -21,6 +21,8 @@ Välipalautus 2:
 - Web-sovelluksen sivuhierarkian luonti ja alkeellinen sisäänkirjautumislogiikka, jossa käyttäjänimi tallennetaan istuntoon
 
 **Sovelluksen käyttöönotto Ubuntu-koneella**
+
+Avaa ja suorita **key.py** ja kopioi tuloste tiedostoon **.env** muuttujan *SECRET-KEY* arvoksi lainausmerkkien sisään. Tämän jälkeen, suorita seuraavat komennot terminaalissa:
 ~~~sh
 git clone https://github.com/cianci0/rate-your-oil
 ~~~
