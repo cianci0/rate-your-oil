@@ -1,9 +1,18 @@
-Hello, {{ username }}
-<br/>
-<button type="button" onclick="window.location.href='/rate'">Rate an oil</button>
-<br/>
-<button type="button" onclick="window.location.href='/your-oils'">Your ratings</button>
-<br/>
-<button type="button" onclick="window.location.href='/best-oils'">Best oils</button>
-<br/>
-<button type="button" onclick="window.location.href='/'">Log out</button>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  </head>
+  <body class="bg-light">
+  <div class="container vh-100 d-flex justify-content-center align-items-center">
+      <div class="text-center">
+          <h1 class="mb-4">Hello, {{ username }}</h1>
+  
+          <div class="d-grid">
+              <button type="button" class="btn btn-outline-dark" onclick="window.location.href='/rate'">Rate an oil</button>
+              <button type="button" class="btn btn-outline-dark" onclick="window.location.href='/your-oils'">Your ratings</button>
+              <button type="button" class="btn btn-outline-dark" onclick="window.location.href='/best-oils'">Best oils</button>
+              <button type="button" class="btn btn-outline-danger" onclick="window.location.href='/logout'">Log out</button>
+          </div>
+      </div>
+  </div>
+  </body>
+  

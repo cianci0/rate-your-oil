@@ -1,2 +1,41 @@
-<h3>A list with the oils you have rated will appear here</h3>
-<button type="button" onclick="window.location.href='/dashboard'">Back</button>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+    <div class="container my-5">
+        <h1 class="text-center mb-5">Your ratings</h1>
+    
+        {% if oils %}
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Producer</th>
+                        <th>Region</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for oil in oils %}
+                    <tr onclick="window.location.href='/rating/{{ oil.oil_id }}'">
+                        <td>{{ oil.oil_name }}</td>
+                        <td>{{ oil.producer_name }}</td>
+                        <td>{{ oil.region_name }}</td>
+                        <td>{{ oil.rating }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center mb-4">
+            You have not rated any oils yet!
+        </div>
+        {% endif %}
+    </div>
+    <div class="text-center mb-4">
+        <a href="/dashboard" class="btn btn-outline-dark">Back</a>
+    </div>
+</body>

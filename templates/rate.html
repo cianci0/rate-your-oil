@@ -1,2 +1,167 @@
-<h3>You will be able to rate a new oil here</h3>
-<button type="button" onclick="window.location.href='/dashboard'">Back</button>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="static/star-rating.css">
+    <style>
+        fieldset, label { margin: 0; padding: 0; }
+        body{ margin: 20px; }
+    </style>
+</head>
+<body>
+    <form id="oilForm" method="POST">
+        <label for="region">Region:</label><br>
+        <select id="region" name="region" required onchange="updateProducers(); fetchOilNames(this.value);">
+            <option value="">Select a region</option>
+            {% for region in regions %}
+                <option value="{{ region }}">{{ region }}</option>
+            {% endfor %}
+        </select><br><br>        
+
+        <label for="producer">Producer:</label><br>
+        <select id="producer" name="producer" required onchange="checkOtherProducer()">
+            <option value="">Select a producer</option>
+        </select><br><br>
+
+        <div id="otherProducerDiv" style="display:none;">
+            <label for="other_producer">Producer name:</label><br>
+            <input type="text" id="other_producer" name="other_producer"><br><br>
+        </div>
+
+        <label for="oil_name">Oil Name:</label><br>
+        <input type="text" id="oil_name" name="oil_name" list="oilNames" required autocomplete="off"> 
+        <datalist id="oilNames"></datalist><br><br>
+
+        <label for="oil_rating">Oil Rating:</label><br>
+        <div id="star-rating-container">
+            <div>
+                <script>
+                    fetch('static/star-rating.html')
+                        .then(response => response.text())
+                        .then(data => {
+                            document.getElementById('star-rating-container').innerHTML = data;
+                        });
+                </script>
+            </div>
+        </div>
+        <br><br>
+
+        <label for="fruity">Fruity</label><br>
+        <input type="range" min="1" max="100" value="50" id="fruity" name="fruity">
+        <div id="fruityValue">50</div>
+        <br><br>
+    
+        <label for="grassy">Grassy</label><br>
+        <input type="range" min="1" max="100" value="50" id="grassy" name="grassy">
+        <div id="grassyValue">50</div>
+        <br><br>
+    
+        <label for="salty">Salty</label><br>
+        <input type="range" min="1" max="100" value="50" id="salty" name="salty">
+        <div id="saltyValue">50</div>
+        <br><br>
+    
+        <label for="sweet">Sweet</label><br>
+        <input type="range" min="1" max="100" value="50" id="sweet" name="sweet">
+        <div id="sweetValue">50</div>
+        <br><br>
+
+        <label for="floral">Floral</label><br>
+        <input type="range" min="1" max="100" value="50" id="floral" name="floral">
+        <div id="floralValue">50</div>
+        <br><br>
+    
+        <label for="pungent">Pungent</label><br>
+        <input type="range" min="1" max="100" value="50" id="pungent" name="pungent">
+        <div id="pungentValue">50</div>
+        <br><br>
+    
+        <label for="citrusy">Citrusy</label><br>
+        <input type="range" min="1" max="100" value="50" id="citrusy" name="citrusy">
+        <div id="citrusyValue">50</div>
+        <br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+    <button type="button" onclick="window.location.href='/dashboard'">Back</button>
+           
+    <script>
+        function updateSliderValue(sliderId, outputId) {
+            var slider = document.getElementById(sliderId);
+            var output = document.getElementById(outputId);
+            output.innerHTML = slider.value;
+
+            slider.oninput = function() {
+                output.innerHTML = this.value;
+            }
+        }
+
+        updateSliderValue('fruity', 'fruityValue');
+        updateSliderValue('grassy', 'grassyValue');
+        updateSliderValue('salty', 'saltyValue');
+        updateSliderValue('sweet', 'sweetValue');
+        updateSliderValue('floral', 'floralValue');
+        updateSliderValue('pungent', 'pungentValue');
+        updateSliderValue('citrusy', 'citrusyValue');
+
+        function updateProducers() {
+            const region = document.getElementById('region').value;
+            const producerDropdown = document.getElementById('producer');
+            producerDropdown.innerHTML = '<option value="">Select a producer</option>';
+            
+            if (region) {
+                fetch(`/get_producers/${region}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(producer => {
+                            const option = document.createElement('option');
+                            option.value = producer;
+                            option.textContent = producer;
+                            producerDropdown.appendChild(option);
+                        });
+
+                    });
+            }
+        }
+
+        function checkOtherProducer() {
+            const producerDropdown = document.getElementById('producer');
+            const otherProducerDiv = document.getElementById('otherProducerDiv');
+            const otherProducerInput = document.getElementById('other_producer');
+
+            if (producerDropdown.value === 'Other') {
+                otherProducerDiv.style.display = 'block';
+                otherProducerInput.setAttribute('required', true);
+            } else {
+                otherProducerDiv.style.display = 'none';
+            }
+        }
+
+        function fetchOilNames(region, producer) {
+            fetch(`/get_oils/${region}/${producer}`)
+                .then(response => response.json())
+                .then(data => {
+                    const oilList = document.getElementById('oilNames');
+                    oilList.innerHTML = '';
+        
+                    data.forEach(oil => {
+                        const option = document.createElement('option');
+                        option.value = oil;
+                        oilList.appendChild(option);
+                    });
+                })
+        }
+
+        document.getElementById('region').addEventListener('change', function() {
+            const selectedRegion = this.value;
+            const selectedProducer = document.getElementById('producer').value;
+            fetchOilNames(selectedRegion, selectedProducer);
+        });
+
+        document.getElementById('producer').addEventListener('change', function() {
+            const selectedRegion = document.getElementById('region').value;
+            const selectedProducer = this.value;
+            fetchOilNames(selectedRegion, selectedProducer);
+        });
+    </script>
+</body>
+</html>
