@@ -20,6 +20,13 @@ Arvion tallentamista varten käyttäjä syöttää seuraavat tiedot:
 Välipalautus 2: 
 - Web-sovelluksen sivuhierarkian luonti ja alkeellinen sisäänkirjautumislogiikka, jossa käyttäjänimi tallennetaan istuntoon
 
+Välipalautus 3: 
+- Tietokantayhteyden käyttöönotto
+- Sovelluksen rakenteen luonti; best-oils-sivu vielä tekemättä
+- Sivujen tyyliratkaisut, poislukien rate-sivu
+- Tiedon visualisointi matplotlibilla. Ei toimi vielä halutulla tavalla
+
+
 **Sovelluksen käyttöönotto Ubuntu-koneella**
 
 Avaa ja suorita **key.py** ja kopioi tuloste tiedostoon **.env** muuttujan *SECRET-KEY* arvoksi ja sijoita *PostgreSQL*-käyttäjänimesi <käyttäjänimi>-kohtaan tiedostossa **app.py**. 
