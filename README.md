@@ -27,6 +27,7 @@ Välipalautus 3:
 - Tiedon visualisointi matplotlibilla. Ei toimi vielä halutulla tavalla
 
 
+
 **Sovelluksen käyttöönotto Ubuntu-koneella**
 
 Avaa ja suorita **key.py** ja kopioi tuloste tiedostoon **.env** muuttujan *SECRET-KEY* arvoksi ja sijoita *PostgreSQL*-käyttäjänimesi <käyttäjänimi>-kohtaan tiedostossa **app.py**. 
