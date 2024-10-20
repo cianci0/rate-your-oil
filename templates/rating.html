@@ -2,32 +2,30 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #F4F4F4;
+            background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
-
         .card-container {
             width: 40vw;
+            max-width: 530px;
             background-color: white;
-            border: 1px solid #CCCCCC;
+            border: 1px solid #ccc;
             border-radius: 10px;
             box-shadow: 0 2px 4px #777777;
             padding: 20px;
             position: relative;
             overflow: hidden;
         }
-
         .oil-name {
             font-size: 1.5em;
             font-weight: bold;
             margin-bottom: 10px;
             text-align: left;
         }
-
         .oil-producer,
         .oil-region,
         .oil-rating {
@@ -35,26 +33,22 @@
             margin: 5px;
             text-align: left;
         }
-
         .radar-chart {
             margin-top: 20px;
             width: 100%;
             display: flex;
             justify-content: center;
         }
-
         .radar-chart embed {
             width: 100%;
             max-width: 500px;
             height: auto;
         }
-
         .button-container {
             display: flex;
             justify-content: space-between;
             margin-top: 15px;
         }        
-
         .flag {
             position: absolute;
             top: 20px;
@@ -69,7 +63,7 @@
         <div class="oil-name">{{ oil_name }}</div>
         <div class="oil-producer">{{ oil_producer }}</div>
         <div class="oil-region">{{ oil_region }}</div>
-        <div class="oil-rating">{{ oil_rating }}</div>
+        <div class="oil-rating"> <span style="color: #ffd500;">{{ oil_rating }}</span> / <span style="color: lightgray;">{{ average_rating }}</span></div>
         <img class="flag" src="https://flagcdn.com/w320/{{ country_code }}.png" alt="Flag of {{ oil_region }}" />
 
         <div class="radar-chart">
@@ -77,9 +71,14 @@
         </div>
 
         <div class="button-container">
-            <a href="/rate" class="btn btn-outline-dark button">Rate another oil</a>
-            <a href="/dashboard" class="btn btn-outline-dark button">Go to Dashboard</a>
-            <a href="/your-oils" class="btn btn-outline-dark button">Your Ratings</a>
+            <a href="/rate" class="btn btn-outline-dark button">New rating</a>
+            <a href="/dashboard" class="btn btn-outline-dark button">Dashboard</a>
+            <a href="/your-oils" class="btn btn-outline-dark button" onclick="goBack()">Back</a>
         </div>
     </div>
+    <script>
+        function goBack() {
+          window.history.back();
+        }
+    </script>
 </body>
