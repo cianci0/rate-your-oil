@@ -34,8 +34,8 @@ Lopullinen palautus:
 **Sovelluksen käyttöönotto Ubuntu-koneella**
 
 Avaa ja suorita **key.py** ja kopioi tuloste tiedostoon **.env** muuttujan *SECRET-KEY* arvoksi ja sijoita *PostgreSQL*-käyttäjänimesi <käyttäjänimi>-kohtaan tiedostossa **app.py**. 
+Suorita terminaalissa seuraavat komennot:
 
-Avaa psql-tulkki ja suorita tiedostosta schema.sql löytyvöt sql-komennot.
 
 ~~~sh
 git clone https://github.com/cianci0/rate-your-oil
