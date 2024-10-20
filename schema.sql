@@ -9,6 +9,12 @@ CREATE TABLE regions (
     region_name VARCHAR UNIQUE
 );
 
+CREATE TABLE producers (
+    producer_id SERIAL PRIMARY KEY,
+    producer_name VARCHAR(255),
+    region_id INT REFERENCES regions(region_id)
+);
+
 CREATE TABLE oils (
     oil_id SERIAL PRIMARY KEY,
     oil_name VARCHAR(255) UNIQUE,
@@ -28,10 +34,4 @@ CREATE TABLE ratings (
     floral INT,
     pungent INT,
     citrusy INT
-);
-
-CREATE TABLE producers (
-    producer_id SERIAL PRIMARY KEY,
-    producer_name VARCHAR(255),
-    region_id INT REFERENCES regions(region_id)
 );
