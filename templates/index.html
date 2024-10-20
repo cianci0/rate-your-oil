@@ -1,11 +1,30 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-</head>
-<body class="bg-light">
+    <style>
+        .btn-dark-gray {
+            color: black;
+            border: solid 1.5px;
+        }
+        .btn-dark-gray:hover {
+            background-color: #dddddd;
+            color: black;
+            border: solid 1.5px;
+        }
 
+    </style>
+</head>
+<body class="bg-light"> 
+    <img src="/static/Flag_of_Spain_(black_and_white).png" 
+    style="width: 25%; max-height: 350px; height: auto; position: absolute; top: 0px; left: 0px; z-index: 10; object-fit: contain;">
+    <img src="/static/Flag_of_Sicilian_Kingdom_1848.svg.png" 
+    style="width: 25%; max-height: 350px; height: auto; position: absolute; bottom: 0px; left: 0px; z-index: 10; object-fit: contain;">
+    <img src="/static/Flag_of_Cretan_State.svg.png" 
+    style="width: 25%; max-height: 350px; height: auto; position: absolute; top: 0px; right: 0px; z-index: 10; object-fit: contain;">
+    <img src="/static/Presidential_Standard_of_Tunisia.svg.png" 
+    style="width: 25%; max-height: 350px; height: auto; position: absolute; bottom: 0px; right: 0px; z-index: 10; object-fit: contain;">
 <div class="container vh-100 d-flex justify-content-center align-items-center">
     <div class="text-center">
-        <h3>Welcome to rate-your-oil</h3>
+        <h3 style="font-weight: 450;">Welcome to rate-your-oil</h3>
         <button type="button" class="btn btn-outline-dark" style="margin-top: 5%;" onclick="window.location.href='/login'">Proceed to login</button>
         <button type="button" class="btn btn-outline-dark" style="margin-top: 5%;" onclick="window.location.href='/signup'">Sign up</button>
     </div>
