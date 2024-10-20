@@ -1,90 +1,222 @@
-<!DOCTYPE html>
-<html>
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/star-rating.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <style>
         fieldset, label { margin: 0; padding: 0; }
-        body{ margin: 20px; }
+        body { margin: 0; padding: 0; overflow: hidden;}
+        section { 
+            height: 100vh;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center;
+            padding: 20px; 
+        }
+        .section-container {
+            width: 100%;
+            text-align: center;
+        }
+        input[type="range"] { 
+            -webkit-appearance: none;
+            width: 50%;
+            height: 8px; 
+            border-radius: 5px;
+            background: #ddd; 
+            outline: none; 
+        }
+        input[type="text"] {
+            background-color: white;
+            border: 1px solid gray;
+            border-radius: 4px;
+            padding: 5px;
+            font-size: 14px;
+        }
+        .scroll-btn {
+            margin-top: 20px;
+            margin-left: 4px;
+            padding: 10px 12px;
+            font-size: 14px;
+            border: 1px solid black;
+            cursor: pointer;
+            background-color: #3a6eff;
+            color: white;
+            border-radius: 4px;
+        }
+        .scroll-btn:hover {
+            background-color: #2150d0;
+        }
+        .scroll-btn.disabled {
+            background-color: lightgray;
+            cursor: not-allowed;
+        }
+        .slider-label {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .slider-wrapper {
+            width: '500px';
+            align-items: center;
+        }
+        .slider-value {
+            padding-left: 24px;
+            margin-top: 2px;
+            margin-bottom: 5px;
+        }
+        select {
+            background-color: white;
+            border: 1px solid gray;
+            border-radius: 4px;
+            padding: 5px;
+            font-size: 16px;
+        }
+                
     </style>
 </head>
 <body>
+
     <form id="oilForm" method="POST">
-        <label for="region">Region:</label><br>
-        <select id="region" name="region" required onchange="updateProducers(); fetchOilNames(this.value);">
-            <option value="">Select a region</option>
-            {% for region in regions %}
-                <option value="{{ region }}">{{ region }}</option>
-            {% endfor %}
-        </select><br><br>        
-
-        <label for="producer">Producer:</label><br>
-        <select id="producer" name="producer" required onchange="checkOtherProducer()">
-            <option value="">Select a producer</option>
-        </select><br><br>
-
-        <div id="otherProducerDiv" style="display:none;">
-            <label for="other_producer">Producer name:</label><br>
-            <input type="text" id="other_producer" name="other_producer"><br><br>
-        </div>
-
-        <label for="oil_name">Oil Name:</label><br>
-        <input type="text" id="oil_name" name="oil_name" list="oilNames" required autocomplete="off"> 
-        <datalist id="oilNames"></datalist><br><br>
-
-        <label for="oil_rating">Oil Rating:</label><br>
-        <div id="star-rating-container">
+        <section id="section1" class="section-container">
             <div>
-                <script>
-                    fetch('static/star-rating.html')
-                        .then(response => response.text())
-                        .then(data => {
-                            document.getElementById('star-rating-container').innerHTML = data;
-                        });
-                </script>
+                <label for="region">Region:</label><br>
+                <select id="region" name="region" required onchange="updateProducers(); fetchOilNames(this.value); validateForm();">
+                    <option value="">Select a region</option>
+                    {% for region in regions %}
+                        <option value="{{ region }}">{{ region }}</option>
+                    {% endfor %}
+                </select><br><br>        
+
+                <label for="producer">Producer:</label><br>
+                <select id="producer" name="producer" required onchange="checkOtherProducer(); validateForm();">
+                    <option value="">Select a producer</option>
+                </select><br><br>
+
+                <div id="otherProducerDiv" style="display:none;">
+                    <label for="other_producer">Producer name:</label><br>
+                    <input type="text" id="other_producer" name="other_producer" required autocomplete="off" oninput="validateForm();"><br><br>
+                </div>
+
+                <label for="oil_name">Oil Name:</label><br>
+                <input type="text" id="oil_name" name="oil_name" list="oilNames" required autocomplete="off" oninput="validateForm();"> 
+                <datalist id="oilNames"></datalist><br><br>
+
+                <label for="oil_rating">Rating:</label><br>
+                <div id="star-rating-container">
+                    <script>
+                        fetch('static/star-rating.html')
+                            .then(response => response.text())
+                            .then(data => {
+                                document.getElementById('star-rating-container').innerHTML = data;
+                            });
+                    </script>
+                </div>
+                <br><br>
+                <button type="button" class="btn btn-outline-dark" onclick="window.location.href='/dashboard'">Back</button>
+                <button type="button" id="scrollBtn" class="scroll-btn disabled" onclick="scrollToSection('section2')" disabled>
+                    <i class="bi bi-arrow-down"></i>
+                </button>
             </div>
-        </div>
-        <br><br>
+        </section>
 
-        <label for="fruity">Fruity</label><br>
-        <input type="range" min="1" max="100" value="50" id="fruity" name="fruity">
-        <div id="fruityValue">50</div>
-        <br><br>
-    
-        <label for="grassy">Grassy</label><br>
-        <input type="range" min="1" max="100" value="50" id="grassy" name="grassy">
-        <div id="grassyValue">50</div>
-        <br><br>
-    
-        <label for="salty">Salty</label><br>
-        <input type="range" min="1" max="100" value="50" id="salty" name="salty">
-        <div id="saltyValue">50</div>
-        <br><br>
-    
-        <label for="sweet">Sweet</label><br>
-        <input type="range" min="1" max="100" value="50" id="sweet" name="sweet">
-        <div id="sweetValue">50</div>
-        <br><br>
+        <section id="section2" class="section-container">
+            <div>
+                <h2 style="margin: 30px;">Describe the taste profile</h2>
+                <div class="slider-wrapper">
+                    <label for="fruity" class="slider-label">Not Fruity</label>
+                    <input type="range" min="1" max="100" value="50" id="fruity" name="fruity">
+                    <label for="fruity" class="slider-label">Fruity</label>
+                </div>
+                <div id="fruityValue" class="slider-value">50</div>
 
-        <label for="floral">Floral</label><br>
-        <input type="range" min="1" max="100" value="50" id="floral" name="floral">
-        <div id="floralValue">50</div>
-        <br><br>
-    
-        <label for="pungent">Pungent</label><br>
-        <input type="range" min="1" max="100" value="50" id="pungent" name="pungent">
-        <div id="pungentValue">50</div>
-        <br><br>
-    
-        <label for="citrusy">Citrusy</label><br>
-        <input type="range" min="1" max="100" value="50" id="citrusy" name="citrusy">
-        <div id="citrusyValue">50</div>
-        <br><br>
+                <div class="slider-wrapper">
+                    <label for="grassy" class="slider-label">Not Grassy</label>
+                    <input type="range" min="1" max="100" value="50" id="grassy" name="grassy">
+                    <label for="grassy" class="slider-label">Grassy</label>
+                </div>
+                <div id="grassyValue" class="slider-value">50</div>
 
-        <input type="submit" value="Submit">
+                <div class="slider-wrapper">
+                    <label for="salty" class="slider-label">Not Salty</label>
+                    <input type="range" min="1" max="100" value="50" id="salty" name="salty">
+                    <label for="salty" class="slider-label">Salty</label>
+                </div>
+                <div id="saltyValue" class="slider-value">50</div>
+
+                <div class="slider-wrapper">
+                    <label for="sweet" class="slider-label">Not Sweet</label>
+                    <input type="range" min="1" max="100" value="50" id="sweet" name="sweet">
+                    <label for="sweet" class="slider-label">Sweet</label>
+                </div>
+                <div id="sweetValue" class="slider-value">50</div>
+
+                <div class="slider-wrapper">
+                    <label for="floral" class="slider-label">Not Floral</label>
+                    <input type="range" min="1" max="100" value="50" id="floral" name="floral">
+                    <label for="floral" class="slider-label">Floral</label>
+                </div>
+                <div id="floralValue" class="slider-value">50</div>
+
+                <div class="slider-wrapper">
+                    <label for="pungent" class="slider-label">Not Pungent</label>
+                    <input type="range" min="1" max="100" value="50" id="pungent" name="pungent">
+                    <label for="pungent" class="slider-label">Pungent</label>
+                </div>
+                <div id="pungentValue" class="slider-value">50</div>
+
+                <div class="slider-wrapper">
+                    <label for="citrusy" class="slider-label">Not Citrusy</label>
+                    <input type="range" min="1" max="100" value="50" id="citrusy" name="citrusy">
+                    <label for="citrusy" class="slider-label">Citrusy</label>
+                </div>
+                <div id="citrusyValue" class="slider-value">50</div>
+
+                <input type="submit" value="Submit" class="btn btn-outline-dark">
+
+                <button type="button" class="scroll-btn" onclick="scrollToSection('section1')">
+                    <i class="bi bi-arrow-up"></i>
+                </button>
+            </div>
+        </section>
     </form>
-    <button type="button" onclick="window.location.href='/dashboard'">Back</button>
-           
+    
+
     <script>
+        function toggleScrolling(enabled) {
+            if (enabled) {
+                document.body.style.overflow = 'auto';
+            } else {
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function validateForm() {
+            const region = document.getElementById('region').value;
+            const producer = document.getElementById('producer').value;
+            const oilName = document.getElementById('oil_name').value;
+            const otherProducerInput = document.getElementById('other_producer');
+            const scrollBtn = document.getElementById('scrollBtn');
+
+            let allFilled = region !== "" && producer !== "" && oilName !== "";
+
+            if (producer === "Other" && otherProducerInput) {
+                allFilled = allFilled && otherProducerInput.value !== "";
+            }
+
+            if (allFilled) {
+                scrollBtn.disabled = false;
+                scrollBtn.classList.remove('disabled');
+                toggleScrolling(true); 
+            } else {
+                scrollBtn.disabled = true;
+                scrollBtn.classList.add('disabled');
+                toggleScrolling(false); 
+            }
+        }
+
         function updateSliderValue(sliderId, outputId) {
             var slider = document.getElementById(sliderId);
             var output = document.getElementById(outputId);
@@ -118,7 +250,6 @@
                             option.textContent = producer;
                             producerDropdown.appendChild(option);
                         });
-
                     });
             }
         }
@@ -133,7 +264,9 @@
                 otherProducerInput.setAttribute('required', true);
             } else {
                 otherProducerDiv.style.display = 'none';
+                otherProducerInput.removeAttribute('required');
             }
+            validateForm();
         }
 
         function fetchOilNames(region, producer) {
@@ -148,20 +281,27 @@
                         option.value = oil;
                         oilList.appendChild(option);
                     });
-                })
+                });
         }
 
         document.getElementById('region').addEventListener('change', function() {
             const selectedRegion = this.value;
             const selectedProducer = document.getElementById('producer').value;
             fetchOilNames(selectedRegion, selectedProducer);
+            validateForm();
         });
 
         document.getElementById('producer').addEventListener('change', function() {
             const selectedRegion = document.getElementById('region').value;
             const selectedProducer = this.value;
             fetchOilNames(selectedRegion, selectedProducer);
+            validateForm();
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Tab') {
+                event.preventDefault(); 
+            }
         });
     </script>
 </body>
-</html>
