@@ -35,6 +35,8 @@ Lopullinen palautus:
 Avaa ja suorita **key.py** ja kopioi tuloste tiedostoon **.env** muuttujan *SECRET-KEY* arvoksi ja sijoita *PostgreSQL*-käyttäjänimesi <käyttäjänimi>-kohtaan tiedostossa **app.py**. 
 Suorita terminaalissa seuraavat komennot:
 
+Huom! Jos saat "RuntimeError: The session is unavailable because no secret key was set." -virheilmoituksen, vaikka olet asettanut SECRET_KEY-muuttujalle arvon, voit kopioida arvon suoraan app.py-tiedostoon "getenv("SECRET_KEY")" tilalle.
+
 
 ~~~sh
 git clone https://github.com/cianci0/rate-your-oil
