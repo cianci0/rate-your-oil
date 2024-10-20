@@ -9,7 +9,7 @@ from radar import radarchart
 
 app = Flask(__name__)
 app.secret_key = getenv("SECRET_KEY")
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///ciancio"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///<käyttäjänimi>"
 db = SQLAlchemy(app)
 
 def populate_tables():
