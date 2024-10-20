@@ -2,13 +2,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body class="bg-light">
-
     <div class="container my-5">
         <h1 class="text-center mb-5">Your ratings</h1>
     
         {% if oils %}
+
+        <div class="mb-4">
+            <input type="text" id="searchInput" onkeyup="searchOils()" class="form-control" placeholder="Search by name, producer, or region">
+        </div>
+
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="oilsTable">
                 <thead class="thead-light">
                     <tr>
                         <th>Name</th>
@@ -38,4 +42,22 @@
     <div class="text-center mb-4">
         <a href="/dashboard" class="btn btn-outline-dark">Back</a>
     </div>
+    <script>
+        function searchOils() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let rows = document.querySelectorAll("#oilsTable tbody tr");
+
+            rows.forEach(function(row) {
+                let oilName = row.cells[0].textContent.toLowerCase();
+                let producer = row.cells[1].textContent.toLowerCase();
+                let region = row.cells[2].textContent.toLowerCase();
+
+                if (oilName.includes(input) || producer.includes(input) || region.includes(input)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
 </body>
