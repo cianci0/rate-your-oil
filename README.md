@@ -37,7 +37,6 @@ Avaa ja suorita **key.py** ja kopioi tuloste tiedostoon **.env** muuttujan *SECR
 
 Avaa psql-tulkki ja suorita tiedostosta schema.sql löytyvöt sql-komennot.
 
-Tämän jälkeen, suorita seuraavat komennot terminaalissa:
 ~~~sh
 git clone https://github.com/cianci0/rate-your-oil
 ~~~
