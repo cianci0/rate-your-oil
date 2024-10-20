@@ -6,7 +6,7 @@ Sovellus toimii samalla periaattella, kuin olut- ja viiniarviointisovellukset *U
 1. Käyttäjätunnuksen luonti ja sisäänkirjautuminen
 2. Tietokanta, johon käyttäjä voi lisätä arvioitavan oliiviöljyn
 3. Yhteenveto käyttäjän arvoimista oliiviöljyistä
-4. Yhteenveto oliiviöljyn saamista arvioista; tiedon visualisointia mahdollisesti PyChartilla
+4. Yhteenveto kaikkien oliiviöljyjeb saamista arvioista; tiedon visualisointia matplotlib-kirjastolla
 
 Arvion tallentamista varten käyttäjä syöttää seuraavat tiedot:
 1. Öljyn nimi
