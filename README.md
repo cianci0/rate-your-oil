@@ -26,7 +26,10 @@ Välipalautus 3:
 - Sivujen tyyliratkaisut, poislukien rate-sivu
 - Tiedon visualisointi matplotlibilla. Ei toimi vielä halutulla tavalla
 
-
+Lopullinen palautus:
+- rate-sivun tyylitys
+- best-oils sivun luonti
+- koodin siistiminen
 
 **Sovelluksen käyttöönotto Ubuntu-koneella**
 
@@ -48,7 +51,13 @@ python3 -m venv venv
 source venv/bin/activate
 ~~~
 ~~~sh
-pip install flask
+pip install -r requirements.txt
+~~~
+~~~sh
+psql < schema.sql
+~~~
+~~~sh
+python3 app.py
 ~~~
 ~~~sh
 flask run
